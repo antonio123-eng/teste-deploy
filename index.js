@@ -17,12 +17,12 @@ app.use(express.json())
 // routes
 
 // Users
-const userRouter = require('./routes/UserRoutes')
-app.use("/api/users", userRouter)
+// const userRouter = require('./routes/UserRoutes')
+// app.use("/api/users", userRouter)
 
-// Photos
-const photoRoutes = require('./routes/PhotoRoutes')
-app.use("/api/photos", photoRoutes)
+// // Photos
+// const photoRoutes = require('./routes/PhotoRoutes')
+// app.use("/api/photos", photoRoutes)
 
 
 // db connection
