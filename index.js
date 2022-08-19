@@ -1,29 +1,29 @@
 require("dotenv").config()
-const express = require("express")
-const exphbs = require("express-handlebars")
-const session = require("express-session")
+import express, { urlencoded, json} from "express"
+import { engine } from "express-handlebars"
+import session from "express-session"
 const FileStore = require("session-file-store")(session)
-const path = require("path")
-const os = require("os")
+import { join } from "path"
+import { tmpdir } from "os"
 
-const flash = require("express-flash")
+import flash from "express-flash"
 
 const app = express()
 
 const port = process.env.PORT || 3000
 
-const connection = require("./db/connection")
+import connection from "./db/connection"
 
-const Tought = require("./models/Tought")
-const User = require("./models/User")
+import Tought from "./models/Tought"
+import User from "./models/User"
 
 // handlebars
-app.engine("handlebars", exphbs.engine())
+app.engine("handlebars", engine())
 app.set("view engine", "handlebars")
 
 // receber dados do body
-app.use(express.urlencoded({extended: true}))
-app.use(express.json())
+app.use(urlencoded({extended: true}))
+app.use(json())
 
 // sessions
 app.set('trust proxy', 1)
@@ -34,7 +34,7 @@ app.use(session({
    saveUninitialized: false,
    store: new FileStore({
       logFn: function () {},
-      path: path.join(os.tmpdir(), "sessions")
+      path: join(tmpdir(), "sessions")
    }),
    cookie: {
       secure: true,
@@ -57,15 +57,15 @@ app.use((req, res, next) => {
 })
 
 // toughts
-const toughtRoutes = require("./routes/toughtsRoutes")
+import toughtRoutes from "./routes/toughtsRoutes"
 app.use("/toughts", toughtRoutes)
 
-const { showToughts } = require("./controllers/ToughtController")
+import { showToughts } from "./controllers/ToughtController"
 app.get("/", showToughts)
 
 
 // routes of authentication
-const authRoutes = require("./routes/authRoutes")
+import authRoutes from "./routes/authRoutes"
 app.use("/", authRoutes)
 
 connection.sync().then(() => {

@@ -1,5 +1,5 @@
 // const Tought = require("../models/Tought")
-const User = require("../models/User")
+const User = require("../models/User").default
 const bcrypt = require("bcryptjs")
 
 

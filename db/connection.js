@@ -1,4 +1,4 @@
-const {Sequelize} = require("sequelize")
+import { Sequelize } from "sequelize"
 
 const database = process.env.DATABASE
 const dbUser = process.env.DB_USER
@@ -11,4 +11,4 @@ const databaseUrl = new Sequelize(`${database}`, `${dbUser}`, `${dbPassword}`, {
 })
 
 
-module.exports = databaseUrl
+export default databaseUrl

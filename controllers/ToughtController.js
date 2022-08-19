@@ -1,5 +1,5 @@
-const Tought = require("../models/Tought")
-const User = require("../models/User")
+const Tought = require("../models/Tought").default
+const User = require("../models/User").default
 const { Op } = require("sequelize")
 
 const showToughts = async(req, res) => {

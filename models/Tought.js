@@ -1,6 +1,6 @@
-const {DataTypes} = require("sequelize")
-const dbConnection = require("../db/connection")
-const User = require("./User")
+import { DataTypes } from "sequelize"
+import dbConnection from "../db/connection"
+import User, { hasMany } from "./User"
 
 const Tought = dbConnection.define("Tought", {
    title: {
@@ -14,8 +14,8 @@ Tought.belongsTo(User, {
    constraints: true,
    foreignKey: "userId"
 })
-User.hasMany(Tought, {
+hasMany(Tought, {
    foreignKey: "userId"
 })
 
-module.exports = Tought
+export default Tought
