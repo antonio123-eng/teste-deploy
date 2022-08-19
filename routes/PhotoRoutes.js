@@ -13,9 +13,9 @@ const { insertPhoto, deletePhoto, getAllPhotos, getPhotosUser, getPhoto, updated
 
 
 // routes
+router.get("/", getAllPhotos)
 router.post("/", authGuard, imageUpload.single("image"), insertPhotoValidation(), validate, insertPhoto)
 router.delete('/:id', authGuard, deletePhoto)
-router.get("/", authGuard, getAllPhotos)
 router.get("/user/:id", authGuard, getPhotosUser)
 
 // rota de busca
