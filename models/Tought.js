@@ -17,6 +17,6 @@ Tought.belongsTo(User, {
 
 User.hasMany(Tought, {
    foreignKey: "userId"
-})
+}),
 
 module.exports = Tought
