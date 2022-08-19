@@ -26,6 +26,7 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 
 // sessions
+app.set('trust proxy', 1)
 app.use(session({
    name: "session",
    secret: "nosso_secret",
