@@ -10,7 +10,6 @@ const port = process.env.PORT || 3000
 const connection = require("./db/connection")
 
 const Tought = require("./models/Tought")
-const User = require("./models/User")
 
 // handlebars
 app.engine("handlebars", exphbs.engine())
@@ -31,11 +30,6 @@ app.use("/toughts", toughtRoutes)
 
 const { showToughts } = require("./controllers/ToughtController")
 app.get("/", showToughts)
-
-
-// routes of authentication
-const authRoutes = require("./routes/authRoutes")
-app.use("/", authRoutes)
 
 connection.sync().then(() => {
    app.listen(port)

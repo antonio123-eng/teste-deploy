@@ -1,5 +1,4 @@
 const Tought = require("../models/Tought")
-const User = require("../models/User")
 const { Op } = require("sequelize")
 
 const showToughts = async(req, res) => {
@@ -17,7 +16,7 @@ const showToughts = async(req, res) => {
       order = "DESC"
    }
 
-   const toughts = await Tought.findAll({include: User, 
+   const toughts = await Tought.findAll({
       where: {
          title: {[Op.like]: `%${search}%`}
       },
@@ -35,76 +34,18 @@ const showToughts = async(req, res) => {
    res.render("toughts/home", {toughtsValues, search, toughtsQty})
 }
 
-const toughtsDashboard = async(req, res) => {
-   const userLoged = req.session.userid
-
-   // check user exists
-   const user = await User.findOne({
-      where: 
-      {
-         id: userLoged
-      }, 
-      include: Tought, 
-      plain: true
-   })
-
-   if(!user) {
-      res.redirect("/login")
-   }
-
-   const toughtsUser = user.Toughts.map((result) => result.dataValues)
-   let toughtsUserVazia = false
-   if(toughtsUser.length === 0) {
-      toughtsUserVazia = true
-   }
-   res.render("toughts/dashboard", {toughtsUser, toughtsUserVazia})
-}
 
 const createToughts = (req, res) => {
    res.render("toughts/createTought")
 }
 
-
-const addToughts = async(req, res) => {
-
-   const {title} = req.body
-
-   const userLoged = req.session.userid
-
-   const user = await User.findOne({where: {id: userLoged}})
-
-   if(!user) {
-      req.flash("message", "Usuário não autenticado!")
-      req.render("/toughts/add")
-      return
-   }
-
-   const tought = {
-      title,
-      userId: user.id
-   }
-
-   try {
-      await Tought.create(tought)
-      req.flash("message", "Pensamento criado com sucesso!")
-      req.session.save(() => {
-         res.redirect("/toughts/dashboard")
-      })
-      // quando for usar o redirect tem que salvar a sessão
-   } catch (error) {
-      console.log(error)
-   }
-
-}
-
-
 const deleteTought = async (req, res) => {
 
    const id = req.body.id
-   const userLoged = req.session.userid
+
 
   try {
-   await Tought.destroy({where: {id: id, userId: userLoged}})
+   await Tought.destroy({where: {id: id}})
 
    req.flash("message", "Pensamento deletado com sucesso!")
    req.session.save(() => {
@@ -156,9 +97,7 @@ const updateTought = async(req, res) => {
 
 module.exports = {
    showToughts,
-   toughtsDashboard,
    createToughts,
-   addToughts,
    deleteTought,
    updateToughtGet,
    updateTought
