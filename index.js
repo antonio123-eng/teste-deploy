@@ -1,71 +1,40 @@
 require("dotenv").config()
-import express, { urlencoded, json} from "express"
-import { engine } from "express-handlebars"
-import session from "express-session"
-const FileStore = require("session-file-store")(session)
-import { join } from "path"
-import { tmpdir } from "os"
+const express = require("express")
+const exphbs = require("express-handlebars")
 
-import flash from "express-flash"
 
 const app = express()
 
 const port = process.env.PORT || 3000
 
-import connection from "./db/connection"
+const connection = require("./db/connection")
 
-import Tought from "./models/Tought"
-import User from "./models/User"
+const Tought = require("./models/Tought")
+const User = require("./models/User")
 
 // handlebars
-app.engine("handlebars", engine())
+app.engine("handlebars", exphbs.engine())
 app.set("view engine", "handlebars")
 
 // receber dados do body
-app.use(urlencoded({extended: true}))
-app.use(json())
+app.use(express.urlencoded({extended: true}))
+app.use(express.json())
 
-// sessions
-app.set('trust proxy', 1)
-app.use(session({
-   name: "session",
-   secret: "nosso_secret",
-   resave: false,
-   saveUninitialized: false,
-   store: new FileStore({
-      logFn: function () {},
-      path: join(tmpdir(), "sessions")
-   }),
-   cookie: {
-      secure: true,
-      maxAge: 3600000
-   }
-}))
-
-// flash messages
-app.use(flash())
 
 // public path
 app.use(express.static("public"))
 
-// set seeion to res
-app.use((req, res, next) => {
-   if(req.session.userid) {
-      res.locals.session = req.session
-   }
-   next()
-})
 
 // toughts
-import toughtRoutes from "./routes/toughtsRoutes"
+const toughtRoutes = require("./routes/toughtsRoutes")
 app.use("/toughts", toughtRoutes)
 
-import { showToughts } from "./controllers/ToughtController"
+const { showToughts } = require("./controllers/ToughtController")
 app.get("/", showToughts)
 
 
 // routes of authentication
-import authRoutes from "./routes/authRoutes"
+const authRoutes = require("./routes/authRoutes")
 app.use("/", authRoutes)
 
 connection.sync().then(() => {
