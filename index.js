@@ -1,38 +1,40 @@
-require("dotenv").config()
-const express = require("express")
-const exphbs = require("express-handlebars")
+require('dotenv').config()
 
+const express = require('express')
+const cors = require('cors')
+const path = require('path')
 
-const app = express()
 
 const port = process.env.PORT || 3000
 
-const connection = require("./db/connection")
 
-const Tought = require("./models/Tought")
-
-// handlebars
-app.engine("handlebars", exphbs.engine())
-app.set("view engine", "handlebars")
-
-// receber dados do body
-app.use(express.urlencoded({extended: true}))
+const app = express()
+// config json and form data response
+app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 
 
-// public path
-app.use(express.static("public"))
+// routes
+
+// Users
+const userRouter = require('./routes/UserRoutes')
+app.use("/api/users", userRouter)
+
+// Photos
+const photoRoutes = require('./routes/PhotoRoutes')
+app.use("/api/photos", photoRoutes)
 
 
-// toughts
-const toughtRoutes = require("./routes/toughtsRoutes")
-app.use("/toughts", toughtRoutes)
+// db connection
+require('./config/db.js')
 
-const { showToughts } = require("./controllers/ToughtController")
-app.get("/", showToughts)
+// upload
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")))
 
-connection.sync().then(() => {
-   app.listen(port)
-}).catch((error) => {
-   console.log(error)
+// cors
+app.use(cors({credentials: true, origin: "http://localhost:3000"}))
+
+
+app.listen(port, () => {
+   console.log(`Servidor rodando na porta ${port}`)
 })
