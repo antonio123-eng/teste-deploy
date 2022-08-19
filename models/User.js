@@ -1,4 +1,4 @@
-const { DataTypes } = require("Sequelize")
+const {DataTypes} = require("Sequelize")
 const dbConnection = require("../db/connection")
 
 const User = dbConnection.define("User", {
