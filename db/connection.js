@@ -7,8 +7,7 @@ const dbHost = process.env.DB_HOST
 
 const databaseUrl = new Sequelize(`${database}`, `${dbUser}`, `${dbPassword}`, {
    host: `${dbHost}`,
-   dialect: "mysql",
-   timezone: "-03:00"
+   dialect: "mysql"
 })
 
 
