@@ -13,7 +13,8 @@ const Tought = dbConnection.define("Tought", {
 Tought.belongsTo(User, {
    constraints: true,
    foreignKey: "userId"
-})
+}),
+
 User.hasMany(Tought, {
    foreignKey: "userId"
 })
