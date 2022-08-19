@@ -36,7 +36,7 @@ app.use(session({
       path: path.join(os.tmpdir(), "sessions")
    }),
    cookie: {
-      secure: true,
+      secure: false,
       maxAge: 3600000,
       httpOnly: false
    }
