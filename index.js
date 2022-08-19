@@ -10,7 +10,7 @@ const flash = require("express-flash")
 
 const app = express()
 
-const port = process.env.PORT
+const port = process.env.PORT || 3000
 
 const connection = require("./db/connection")
 
