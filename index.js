@@ -34,7 +34,7 @@ require('./config/db.js')
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")))
 
 // cors
-app.use(cors({credentials: true, origin: "http://localhost:3000"}))
+app.use(cors({credentials: true, origin: "https://teste-deploy-frontend.herokuapp.com"}))
 
 
 app.listen(port, () => {
