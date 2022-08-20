@@ -34,7 +34,7 @@ require('./config/db.js')
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")))
 
 // cors
-app.use(cors({credentials: true,  origin: "http://mozilla.org", methods: "GET, POST, OPTIONS, DELETE, PUT, PATCH", exposedHeaders: "X-My-Custom-Header, X-Another-Custom-Header", allowedHeaders: "X-PINGOTHER, Content-Type"}))
+app.use(cors({credentials: true,  origin: "https://teste-deploy-frontend.herokuapp.com/", methods: "GET, POST, OPTIONS, DELETE, PUT, PATCH", exposedHeaders: "X-My-Custom-Header, X-Another-Custom-Header", allowedHeaders: "X-PINGOTHER, Content-Type"}))
 
 app.listen(port, () => {
    console.log(`Servidor rodando na porta ${port}`)
