@@ -34,7 +34,7 @@ require('./config/db.js')
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")))
 
 // cors
-
+app.use(cors())
 
 app.listen(port, () => {
    console.log(`Servidor rodando na porta ${port}`)
