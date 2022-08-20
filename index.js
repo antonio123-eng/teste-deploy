@@ -34,22 +34,14 @@ require('./config/db.js')
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")))
 
 // cors
- app.use((req, res, next) => {
-   res.header("Access-Control-Allow-Origin", "https://teste-deploy-frontend.herokuapp.com")
-   res.header(
-     "Access-Control-Allow-Headers",
-     "Origin, X-Requested, Content-Type, Accept Authorization"
-   )
-   if (req.method === "OPTIONS") {
-     res.header(
-       "Access-Control-Allow-Methods",
-       "POST, PUT, PATCH, GET, DELETE"
-     )
-     return res.status(200).json({})
-   }
-   next()
- })
-
+app.use(
+   cors({
+     origin: ["https://teste-deploy-frontend.herokuapp.com/"],
+     methods: ["GET", "POST", "DELETE", "UPDATE"],
+     credentials: true,
+     origin: true,
+   })
+ );
 
 app.listen(port, () => {
    console.log(`Servidor rodando na porta ${port}`)
