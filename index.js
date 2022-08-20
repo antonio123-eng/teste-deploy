@@ -34,14 +34,7 @@ require('./config/db.js')
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")))
 
 // cors
-app.use(
-   cors({
-     origin: ["https://teste-deploy-frontend.herokuapp.com/"],
-     methods: ["GET", "POST", "DELETE", "UPDATE"],
-     credentials: true,
-     origin: true,
-   })
- );
+const config = require("./config")
 
 app.listen(port, () => {
    console.log(`Servidor rodando na porta ${port}`)
