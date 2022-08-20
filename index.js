@@ -33,6 +33,10 @@ require('./config/db.js')
 // upload
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")))
 
+const corsOptions = {origin: "https://teste-deploy-frontend.herokuapp.com/" || '*', credentials: true};
+
+app.use(cors(corsOptions));
+
 // cors
 app.use((req, res, next) => {
    res.header("Access-Control-Allow-Origin", "*")
@@ -49,7 +53,7 @@ app.use((req, res, next) => {
    }
    next()
  })
- //Cors
+ 
 
 app.listen(port, () => {
    console.log(`Servidor rodando na porta ${port}`)
