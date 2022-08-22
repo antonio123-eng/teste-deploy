@@ -36,9 +36,7 @@ app.use("/uploads", express.static(path.join(__dirname, "/uploads")))
 
 // cors
 app.use(function(req, res, next) {
-   res.header("Access-Control-Allow-Origin", "https://teste-deploy-frontend.herokuapp.com/");
-   res.header("Access-Control-Allow-Credentials", true);
-   res .header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+   res.header("Access-Control-Allow-Origin", "*")
    next();
 })
 
