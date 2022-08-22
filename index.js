@@ -36,6 +36,12 @@ app.use("/uploads", express.static(path.join(__dirname, "/uploads")))
 
 // cors
 app.use(cors({credentials: true, origin: "https://teste-deploy-frontend.herokuapp.com/"}))
+app.use(function(req, res, next) {
+   res.header("Access-Control-Allow-Origin", "https://teste-deploy-frontend.herokuapp.com/");
+   res.header("Access-Control-Allow-Credentials", true);
+   next();
+})
+
 
 app.listen(port, () => {
    console.log(`Servidor rodando na porta ${port}`)
